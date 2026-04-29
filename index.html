@@ -7,91 +7,148 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg: #0a0c10; --surface: #111520; --card: #161b27; --border: #1f2a3d;
-      --accent: #f59e0b; --accent2: #3b82f6; --text: #e8ecf4; --muted: #5a6a88; --green: #10b981;
-    }
+    :root { --bg: #0a0c10; --surface: #111520; --card: #161b27; --border: #1f2a3d; --accent: #f59e0b; --text: #e8ecf4; --muted: #5a6a88; --green: #10b981; }
     html { scroll-behavior: smooth; }
     body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 18px 48px; background: rgba(10,12,16,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 18px 48px; background: rgba(10,12,16,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
     .nav-logo { font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800; letter-spacing: 0.04em; color: var(--accent); }
     .nav-logo span { color: var(--text); }
-    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
     .nav-links a { font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .nav-links a:hover { color: var(--accent); }
-    .nav-cta { padding: 9px 22px; background: var(--accent); color: #000; font-size: 13px; font-weight: 500; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; }
+    .nav-cta { padding: 9px 22px; background: var(--accent); color: #000; font-size: 13px; font-weight: 600; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; }
+
+    /* HERO */
     #home { min-height: 100vh; display: flex; align-items: center; padding: 120px 48px 80px; position: relative; overflow: hidden; }
     .hero-grid { position: absolute; inset: 0; opacity: 0.06; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 60px 60px; }
-    .hero-glow { position: absolute; top: 20%; left: 50%; transform: translateX(-50%); width: 600px; height: 400px; background: radial-gradient(ellipse, rgba(245,158,11,0.08) 0%, transparent 70%); pointer-events: none; }
-    .hero-content { position: relative; max-width: 780px; }
-    .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25); padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; animation: fadeUp 0.6s ease both; }
+    .hero-glow { position: absolute; top: 20%; left: 50%; transform: translateX(-50%); width: 700px; height: 400px; background: radial-gradient(ellipse, rgba(245,158,11,0.09) 0%, transparent 70%); pointer-events: none; }
+    .hero-content { position: relative; max-width: 820px; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; }
     .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
-    h1 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(56px, 9vw, 110px); font-weight: 800; line-height: 0.95; letter-spacing: -0.01em; text-transform: uppercase; animation: fadeUp 0.6s 0.1s ease both; }
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
+    h1 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(56px, 9vw, 110px); font-weight: 800; line-height: 0.95; text-transform: uppercase; }
     h1 .highlight { color: var(--accent); }
-    .hero-sub { margin-top: 28px; max-width: 520px; font-size: 16px; line-height: 1.7; color: var(--muted); animation: fadeUp 0.6s 0.2s ease both; }
-    .hero-actions { margin-top: 40px; display: flex; gap: 14px; align-items: center; animation: fadeUp 0.6s 0.3s ease both; }
-    .btn-primary { padding: 14px 32px; background: var(--accent); color: #000; font-size: 14px; font-weight: 500; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; }
-    .btn-outline { padding: 14px 32px; background: transparent; color: var(--text); font-size: 14px; font-weight: 500; border: 1px solid var(--border); border-radius: 5px; cursor: pointer; text-decoration: none; }
-    .hero-stats { margin-top: 64px; display: flex; gap: 48px; animation: fadeUp 0.6s 0.4s ease both; }
-    .stat-num { font-family: 'Barlow Condensed', sans-serif; font-size: 40px; font-weight: 700; color: var(--accent); line-height: 1; }
-    .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-sub { margin-top: 28px; max-width: 520px; font-size: 16px; line-height: 1.7; color: var(--muted); }
+    .hero-actions { margin-top: 40px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary { padding: 14px 32px; background: var(--accent); color: #000; font-size: 14px; font-weight: 600; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; }
+    .btn-outline { padding: 14px 32px; background: transparent; color: var(--text); font-size: 14px; border: 1px solid var(--border); border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; }
+    .hero-stats { margin-top: 64px; display: flex; gap: 48px; flex-wrap: wrap; }
+    .stat-num { font-family: 'Barlow Condensed', sans-serif; font-size: 42px; font-weight: 700; color: var(--accent); line-height: 1; }
+    .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    /* SECTIONS */
     section { padding: 100px 48px; }
-    .section-tag { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+    .section-tag { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
     .section-tag::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
-    .section-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(36px, 5vw, 58px); font-weight: 700; text-transform: uppercase; line-height: 1.05; margin-bottom: 20px; }
-    .section-sub { font-size: 15px; color: var(--muted); max-width: 500px; line-height: 1.7; }
+    .section-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(36px, 5vw, 58px); font-weight: 700; text-transform: uppercase; line-height: 1.05; margin-bottom: 16px; }
+    .section-sub { font-size: 15px; color: var(--muted); max-width: 560px; line-height: 1.7; margin-bottom: 48px; }
+
+    /* ABOUT */
     #about { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1100px; margin: 0 auto; }
-    .about-visual { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .about-visual { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .about-stat { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
-    .about-stat-num { font-family: 'Barlow Condensed', sans-serif; font-size: 32px; font-weight: 700; color: var(--accent); }
+    .about-stat-num { font-family: 'Barlow Condensed', sans-serif; font-size: 34px; font-weight: 700; color: var(--accent); }
     .about-stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
     .about-text p { font-size: 15px; color: var(--muted); line-height: 1.8; margin-bottom: 16px; }
-    .about-text p strong { color: var(--text); font-weight: 500; }
-    .services-header { margin-bottom: 56px; }
-    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-    .service-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 32px; transition: border-color 0.2s, transform 0.2s; position: relative; overflow: hidden; }
-    .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
-    .service-card:hover { border-color: var(--muted); transform: translateY(-3px); }
-    .service-card:hover::before { transform: scaleX(1); }
-    .service-icon { width: 44px; height: 44px; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 20px; }
-    .service-card h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; text-transform: uppercase; margin-bottom: 10px; }
-    .service-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
-    #contact { background: var(--surface); border-top: 1px solid var(--border); }
-    .contact-wrap { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-    .contact-form { display: flex; flex-direction: column; gap: 14px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .contact-form input, .contact-form textarea { width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 7px; padding: 12px 16px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; }
+    .about-text p strong { color: var(--text); }
+
+    /* TRUCK TYPES */
+    #trucks { background: var(--bg); }
+    .trucks-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+    .truck-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: transform 0.25s, border-color 0.25s; }
+    .truck-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+    .truck-img { width: 100%; height: 210px; object-fit: cover; display: block; background: var(--surface); }
+    .truck-info { padding: 22px 24px; }
+    .truck-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .truck-type { font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 700; text-transform: uppercase; }
+    .truck-commission { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; color: var(--accent); }
+    .commission-label { font-size: 10px; color: var(--muted); text-align: right; text-transform: uppercase; letter-spacing: 0.06em; }
+    .truck-desc { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 14px; }
+    .truck-badge { display: inline-block; padding: 4px 12px; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25); border-radius: 4px; font-size: 11px; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; }
+
+    /* SERVICES */
+    #services { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0; }
+    .service-card { padding: 28px 32px; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); display: flex; align-items: flex-start; gap: 20px; transition: background 0.2s; cursor: pointer; }
+    .service-card:hover { background: var(--card); }
+    .service-card:hover .service-arrow { opacity: 1; transform: translateX(0); }
+    .service-left { flex: 1; }
+    .service-icon-box { width: 44px; height: 44px; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 14px; }
+    .service-card h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.02em; }
+    .service-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .service-arrow { color: var(--accent); font-size: 20px; opacity: 0.4; transform: translateX(-4px); transition: all 0.2s; margin-top: 4px; flex-shrink: 0; }
+
+    /* CONTACT */
+    #contact { background: var(--surface); padding: 0; }
+    .contact-hero { background: var(--card); border-bottom: 1px solid var(--border); padding: 60px 48px; text-align: center; }
+    .contact-hero h2 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(40px, 6vw, 72px); font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em; }
+    .contact-info-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-bottom: 1px solid var(--border); }
+    .info-col { padding: 40px 36px; border-right: 1px solid var(--border); }
+    .info-col:last-child { border-right: none; }
+    .info-col-title { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; font-weight: 600; }
+    .info-col p { font-size: 14px; color: var(--muted); line-height: 1.8; }
+    .info-col a { color: var(--accent); text-decoration: none; }
+    .info-col a:hover { text-decoration: underline; }
+    .info-col .highlight-text { color: var(--text); font-weight: 500; }
+    .contact-form-section { padding: 60px 48px; max-width: 1100px; margin: 0 auto; }
+    .contact-form-title { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 28px; }
+    .contact-form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .contact-form .full { grid-column: 1 / -1; }
+    .contact-form input, .contact-form textarea, .contact-form select { width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 7px; padding: 13px 16px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; transition: border-color 0.2s; }
+    .contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus { border-color: var(--accent); }
     .contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--muted); }
-    .contact-form textarea { resize: vertical; min-height: 120px; }
-    .submit-btn { padding: 13px; background: var(--accent); color: #000; font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 14px; border: none; border-radius: 7px; cursor: pointer; }
-    .contact-info { display: flex; flex-direction: column; gap: 24px; }
-    .contact-info-item { display: flex; gap: 16px; align-items: flex-start; }
-    .contact-icon { width: 40px; height: 40px; min-width: 40px; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
-    .contact-info-item h4 { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
-    .contact-info-item p { font-size: 15px; font-weight: 500; }
-    .dash-cta { padding: 60px 48px; background: linear-gradient(135deg, rgba(245,158,11,0.08) 0%, rgba(59,130,246,0.05) 100%); border-top: 1px solid var(--border); text-align: center; }
-    .dash-cta h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 40px; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; }
-    .dash-cta p { color: var(--muted); font-size: 15px; margin-bottom: 28px; }
-    footer { padding: 32px 48px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-    .footer-logo { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; color: var(--accent); }
+    .contact-form select option { background: var(--card); }
+    .contact-form textarea { resize: vertical; min-height: 140px; }
+    .submit-btn { padding: 14px 40px; background: var(--accent); color: #000; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 15px; border: none; border-radius: 7px; cursor: pointer; transition: opacity 0.2s; }
+    .submit-btn:hover { opacity: 0.85; }
+
+    /* DASHBOARD CTA */
+    .dash-cta { padding: 70px 48px; background: linear-gradient(135deg, rgba(245,158,11,0.08) 0%, rgba(59,130,246,0.04) 100%); border-top: 1px solid var(--border); text-align: center; }
+    .dash-cta h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 44px; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; }
+    .dash-cta p { color: var(--muted); font-size: 15px; margin-bottom: 30px; }
+
+    /* FOOTER */
+    footer { padding: 32px 48px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; background: var(--bg); }
+    .footer-logo { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; color: var(--accent); }
     footer p { font-size: 12px; color: var(--muted); }
-    @media (max-width: 768px) { nav { padding: 16px 20px; } .nav-links { display: none; } #home, section { padding: 80px 20px; } .about-grid, .contact-wrap { grid-template-columns: 1fr; gap: 40px; } .hero-stats { gap: 28px; flex-wrap: wrap; } footer { flex-direction: column; gap: 12px; text-align: center; } }
+
+    @media (max-width: 900px) {
+      .contact-info-bar { grid-template-columns: 1fr 1fr; }
+      .info-col:nth-child(2) { border-right: none; }
+      .contact-form { grid-template-columns: 1fr; }
+      .contact-form .full { grid-column: 1; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; } .nav-links { display: none; }
+      #home, section { padding: 80px 20px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .hero-stats { gap: 28px; }
+      footer { flex-direction: column; text-align: center; }
+      .contact-info-bar { grid-template-columns: 1fr; }
+      .info-col { border-right: none; border-bottom: 1px solid var(--border); }
+      .contact-hero, .contact-form-section { padding: 40px 20px; }
+      .dash-cta { padding: 50px 20px; }
+    }
   </style>
 </head>
 <body>
+
 <nav>
   <div class="nav-logo">DISPATCH<span>IFY</span></div>
   <ul class="nav-links">
     <li><a href="#home">Home</a></li>
     <li><a href="#about">About</a></li>
+    <li><a href="#trucks">Fleet</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="dashboard.html" class="nav-cta">Open Dashboard</a>
 </nav>
+
+<!-- HERO -->
 <section id="home">
   <div class="hero-grid"></div>
   <div class="hero-glow"></div>
@@ -101,20 +158,22 @@
     <p class="hero-sub">Dispatchify connects shippers with trusted drivers — real-time load tracking, seamless dispatch management, and zero delays.</p>
     <div class="hero-actions">
       <a href="#contact" class="btn-primary">Get a Quote</a>
-      <a href="#services" class="btn-outline">Our Services</a>
+      <a href="#trucks" class="btn-outline">Our Fleet</a>
     </div>
     <div class="hero-stats">
       <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Loads Delivered</div></div>
-      <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Active Drivers</div></div>
+      <div class="stat-item"><div class="stat-num">78</div><div class="stat-label">Active Drivers</div></div>
       <div class="stat-item"><div class="stat-num">98%</div><div class="stat-label">On-Time Rate</div></div>
     </div>
   </div>
 </section>
+
+<!-- ABOUT -->
 <section id="about">
   <div class="about-grid">
     <div class="about-visual">
       <div class="about-stat"><div class="about-stat-num">24/7</div><div class="about-stat-label">Dispatch Support</div></div>
-      <div class="about-stat"><div class="about-stat-num">48h</div><div class="about-stat-label">Avg. Delivery Time</div></div>
+      <div class="about-stat"><div class="about-stat-num">78</div><div class="about-stat-label">Active Drivers</div></div>
       <div class="about-stat"><div class="about-stat-num">100%</div><div class="about-stat-label">Load Visibility</div></div>
       <div class="about-stat"><div class="about-stat-num">$0</div><div class="about-stat-label">Hidden Fees</div></div>
     </div>
@@ -122,75 +181,239 @@
       <div class="section-tag">About Us</div>
       <h2 class="section-title">Built for the Road Ahead</h2>
       <p>At <strong>Dispatchify</strong>, we believe freight shouldn't be complicated. We connect reliable drivers with loads that need moving — fast, efficiently, and transparently.</p>
-      <p>Our dispatch team works around the clock to ensure every shipment is tracked, every driver is supported, and every client is kept in the loop from pickup to delivery.</p>
-      <a href="#contact" class="btn-primary" style="display:inline-block;margin-top:8px">Work With Us</a>
+      <p>Based in <strong>Fredericksburg, VA</strong>, our dispatch team works around the clock to ensure every shipment is tracked, every driver is supported, and every client is in the loop from pickup to delivery.</p>
+      <a href="#contact" class="btn-primary" style="margin-top:8px">Work With Us</a>
     </div>
   </div>
 </section>
-<section id="services">
-  <div class="services-header">
-    <div class="section-tag">What We Do</div>
-    <h2 class="section-title">Our Services</h2>
-    <p class="section-sub">Everything you need to keep freight moving — from a single load to full fleet dispatch.</p>
-  </div>
-  <div class="services-grid">
-    <div class="service-card"><div class="service-icon">🚛</div><h3>Full Truckload</h3><p>Dedicated trucks for large shipments. Your freight, your timeline, door to door with zero stops.</p></div>
-    <div class="service-card"><div class="service-icon">📦</div><h3>LTL Freight</h3><p>Less-than-truckload shipping for smaller loads. Cost-effective and reliable with real-time updates.</p></div>
-    <div class="service-card"><div class="service-icon">⚡</div><h3>Expedited Dispatch</h3><p>Need it there fast? Our expedited service guarantees same-day or next-day load assignment.</p></div>
-    <div class="service-card"><div class="service-icon">📡</div><h3>Live Load Tracking</h3><p>Know where your freight is at every moment. Our dashboard gives you full visibility in real time.</p></div>
-    <div class="service-card"><div class="service-icon">🗂️</div><h3>Driver Management</h3><p>We handle driver assignments, load planning, and route optimization so you don't have to.</p></div>
-    <div class="service-card"><div class="service-icon">🤝</div><h3>Broker Support</h3><p>We work directly with freight brokers to find the best loads and maximize driver earnings.</p></div>
+
+<!-- TRUCK TYPES + RATES -->
+<section id="trucks">
+  <div class="section-tag">Equipment We Handle</div>
+  <h2 class="section-title">Our Fleet & Rates</h2>
+  <p class="section-sub">We dispatch across all major equipment types. Transparent commission rates — no surprises, ever.</p>
+  <div class="trucks-grid">
+
+    <div class="truck-card">
+      <img class="truck-img" src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600&q=80" alt="Reefer Truck">
+      <div class="truck-info">
+        <div class="truck-header">
+          <div class="truck-type">🧊 Reefer</div>
+          <div><div class="truck-commission">5%</div><div class="commission-label">Commission</div></div>
+        </div>
+        <p class="truck-desc">Temperature-controlled trailers maintaining -10°F to 60°F for produce, frozen goods, meat, dairy, and pharmaceuticals. Reefer units consume 0.5–1.5 gallons diesel per hour.</p>
+        <span class="truck-badge">Refrigerated</span>
+      </div>
+    </div>
+
+    <div class="truck-card">
+      <img class="truck-img" src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=600&q=80" alt="Dry Van">
+      <div class="truck-info">
+        <div class="truck-header">
+          <div class="truck-type">📦 Dry Van</div>
+          <div><div class="truck-commission">5%</div><div class="commission-label">Commission</div></div>
+        </div>
+        <p class="truck-desc">Enclosed 53-foot trailers for general freight, retail goods, and packaged products. 3,800 cubic feet, 26 pallets (48×40), max cargo weight 45,000 lbs.</p>
+        <span class="truck-badge">Most Popular</span>
+      </div>
+    </div>
+
+    <div class="truck-card">
+      <img class="truck-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Flatbed">
+      <div class="truck-info">
+        <div class="truck-header">
+          <div class="truck-type">🏗️ Flatbed</div>
+          <div><div class="truck-commission">5%</div><div class="commission-label">Commission</div></div>
+        </div>
+        <p class="truck-desc">Open deck trailers (48–53 feet) for steel, lumber, machinery, and construction materials. 48,000 lbs capacity. Requires chains, straps, and tarps for securement.</p>
+        <span class="truck-badge">Heavy Loads</span>
+      </div>
+    </div>
+
+    <div class="truck-card">
+      <img class="truck-img" src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=600&q=80" alt="Step Deck">
+      <div class="truck-info">
+        <div class="truck-header">
+          <div class="truck-type">📐 Step Deck</div>
+          <div><div class="truck-commission">5%</div><div class="commission-label">Commission</div></div>
+        </div>
+        <p class="truck-desc">Drop-deck trailers for freight up to 10'2" tall. Upper deck 11–13 feet, lower deck 37–40 feet. Max 46,000 lbs. Ideal for tall equipment exceeding flatbed height limits.</p>
+        <span class="truck-badge">Oversized</span>
+      </div>
+    </div>
+
+    <div class="truck-card">
+      <img class="truck-img" src="https://images.unsplash.com/photo-1592838064575-70ed626d3a0e?w=600&q=80" alt="Box Truck">
+      <div class="truck-info">
+        <div class="truck-header">
+          <div class="truck-type">🚚 Box Truck</div>
+          <div><div class="truck-commission">10%</div><div class="commission-label">Commission</div></div>
+        </div>
+        <p class="truck-desc">Straight trucks (16–26 feet) for last-mile delivery. 10,000–15,000 lb payload, 1,500–2,000 cubic feet. Under 26,001 lbs GVWR — no CDL required.</p>
+        <span class="truck-badge">Local & Regional</span>
+      </div>
+    </div>
+
+    <div class="truck-card">
+      <img class="truck-img" src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&q=80" alt="Hotshot">
+      <div class="truck-info">
+        <div class="truck-header">
+          <div class="truck-type">🔥 Hotshot</div>
+          <div><div class="truck-commission">10%</div><div class="commission-label">Commission</div></div>
+        </div>
+        <p class="truck-desc">Heavy-duty pickups (F-350, Ram 3500) with gooseneck trailers. Max 40 feet, 16,500 lbs. Perfect for urgent, time-sensitive freight that can't wait.</p>
+        <span class="truck-badge">Expedited</span>
+      </div>
+    </div>
+
   </div>
 </section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-tag">What We Offer</div>
+  <h2 class="section-title">Our Services</h2>
+  <p class="section-sub">Full-service dispatch and business support — everything a carrier needs to grow and thrive.</p>
+  <div class="services-grid">
+
+    <div class="service-card">
+      <div class="service-left">
+        <div class="service-icon-box">🚛</div>
+        <h3>Dispatch Service</h3>
+        <p>24/7 load booking, rate negotiation, and broker communication so you can focus on driving.</p>
+      </div>
+      <div class="service-arrow">→</div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-left">
+        <div class="service-icon-box">📋</div>
+        <h3>MC Authority Setup</h3>
+        <p>Complete motor carrier authority establishment — we handle the paperwork from start to finish.</p>
+      </div>
+      <div class="service-arrow">→</div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-left">
+        <div class="service-icon-box">💰</div>
+        <h3>Factoring Assistance</h3>
+        <p>Quick payment processing and factoring setup so you get paid fast without the wait.</p>
+      </div>
+      <div class="service-arrow">→</div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-left">
+        <div class="service-icon-box">⚖️</div>
+        <h3>Compliance & Permits</h3>
+        <p>DOT compliance, IFTA, and permits management — stay legal and stress-free on every route.</p>
+      </div>
+      <div class="service-arrow">→</div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-left">
+        <div class="service-icon-box">📊</div>
+        <h3>Accounting Services</h3>
+        <p>Bookkeeping, tax preparation, and financial reports tailored specifically for trucking businesses.</p>
+      </div>
+      <div class="service-arrow">→</div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-left">
+        <div class="service-icon-box">👤</div>
+        <h3>Driver Hiring</h3>
+        <p>CDL-A driver recruitment and placement — we find the right drivers for your fleet fast.</p>
+      </div>
+      <div class="service-arrow">→</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- DASHBOARD CTA -->
 <div class="dash-cta">
   <h2>Ready to Manage Your Loads?</h2>
   <p>Open the Dispatchify dashboard to add loads, assign drivers, and track deliveries in real time.</p>
   <a href="dashboard.html" class="btn-primary">Open Dispatch Dashboard →</a>
 </div>
+
+<!-- CONTACT -->
 <section id="contact">
-  <div class="contact-wrap">
-    <div>
-      <div class="section-tag">Get In Touch</div>
-      <h2 class="section-title">Let's Move Your Freight</h2>
-      <p class="section-sub" style="margin-bottom:40px">Ready to get started? Fill out the form and our dispatch team will reach out within 24 hours.</p>
-      <div class="contact-info">
-        <div class="contact-info-item"><div class="contact-icon">📍</div><div><h4>Location</h4><p>United States — Nationwide</p></div></div>
-        <div class="contact-info-item"><div class="contact-icon">📧</div><div><h4>Email</h4><p>dispatch@dispatchify.com</p></div></div>
-        <div class="contact-info-item"><div class="contact-icon">📞</div><div><h4>Phone</h4><p>+1 (800) DISPATCH</p></div></div>
-      </div>
+  <div class="contact-hero">
+    <h2>Contact Us</h2>
+  </div>
+
+  <div class="contact-info-bar">
+    <div class="info-col">
+      <div class="info-col-title">Our Numbers</div>
+      <p>For New Carriers</p>
+      <p><a href="mailto:jason.oryxlogistics@gmail.com">jason.oryxlogistics@gmail.com</a></p>
     </div>
+    <div class="info-col">
+      <div class="info-col-title">Our Address</div>
+      <p class="highlight-text">Fredericksburg, VA</p>
+      <p>USA — Admin office only</p>
+    </div>
+    <div class="info-col">
+      <div class="info-col-title">Our Hours</div>
+      <p>Mon – Fri &nbsp; <span class="highlight-text">7 AM – 7 PM</span></p>
+      <p>Sat – Sun &nbsp; Closed</p>
+    </div>
+    <div class="info-col">
+      <div class="info-col-title">Dispatching</div>
+      <p class="highlight-text">Nationwide — All 48 States</p>
+      <p>Real-time load tracking included</p>
+    </div>
+  </div>
+
+  <div class="contact-form-section">
+    <div class="contact-form-title">Send Us a Message</div>
     <form class="contact-form" onsubmit="handleSubmit(event)">
-      <div class="form-row">
-        <input type="text" placeholder="Your Name" required>
-        <input type="email" placeholder="Email Address" required>
+      <input type="text" placeholder="Name *" required>
+      <input type="email" placeholder="Email *" required>
+      <input type="tel" placeholder="Phone">
+      <select>
+        <option value="" disabled selected>Truck / Trailer Type</option>
+        <option>Dry Van</option>
+        <option>Reefer</option>
+        <option>Flatbed</option>
+        <option>Step Deck</option>
+        <option>Box Truck</option>
+        <option>Hotshot</option>
+        <option>Power Only</option>
+        <option>Other</option>
+      </select>
+      <textarea class="full" placeholder="Message"></textarea>
+      <div class="full" style="display:flex;justify-content:flex-end">
+        <button type="submit" class="submit-btn">Send →</button>
       </div>
-      <input type="text" placeholder="Company Name">
-      <input type="text" placeholder="Origin City">
-      <input type="text" placeholder="Destination City">
-      <textarea placeholder="Tell us about your freight needs..."></textarea>
-      <button type="submit" class="submit-btn">Send Message →</button>
     </form>
   </div>
 </section>
+
 <footer>
   <div class="footer-logo">DISPATCHIFY</div>
   <p>© 2025 Dispatchify. All rights reserved.</p>
-  <p>Built for the road.</p>
+  <p>Fredericksburg, VA — Built for the road.</p>
 </footer>
+
 <script>
   function handleSubmit(e) {
     e.preventDefault();
     const btn = e.target.querySelector('.submit-btn');
-    btn.textContent = '✓ Message Sent!';
+    btn.textContent = '✓ Sent!';
     btn.style.background = '#10b981';
-    setTimeout(() => { btn.textContent = 'Send Message →'; btn.style.background = ''; e.target.reset(); }, 3000);
+    setTimeout(() => { btn.textContent = 'Send →'; btn.style.background = ''; e.target.reset(); }, 3000);
   }
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; } });
+    entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; } });
   }, { threshold: 0.1 });
-  document.querySelectorAll('.service-card, .about-stat, .contact-info-item').forEach(el => {
-    el.style.opacity = '0'; el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  document.querySelectorAll('.service-card,.about-stat,.truck-card').forEach(el => {
+    el.style.opacity='0'; el.style.transform='translateY(20px)';
+    el.style.transition='opacity 0.5s ease, transform 0.5s ease';
     observer.observe(el);
   });
 </script>
