@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dispatch Dashboard</title>
+  <style>
+    body {
+      font-family: Arial;
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+
+    .box {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      width: 300px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 8px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: #eee;
+      margin: 5px 0;
+      padding: 8px;
+      border-radius: 5px;
+    }
+
+    button {
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+  <h3>Add Load</h3>
+  <input id="origin" placeholder="Origin">
+  <input id="destination" placeholder="Destination">
+
+  <select id="driver">
+    <option>Driver A</option>
+    <option>Driver B</option>
+    <option>Driver C</option>
+  </select>
+
+  <button onclick="addLoad()">Add Load</button>
+</div>
+
+<div class="box">
+  <h3>Loads</h3>
+  <ul id="loadList"></ul>
+</div>
+
+<script>
+let loads = [];
+
+function addLoad() {
+  let origin = document.getElementById("origin").value;
+  let destination = document.getElementById("destination").value;
+  let driver = document.getElementById("driver").value;
+
+  loads.push({
+    origin,
+    destination,
+    driver,
+    status: "Pending"
+  });
+
+  renderLoads();
+}
+
+function renderLoads() {
+  let list = document.getElementById("loadList");
+  list.innerHTML = "";
+
+  loads.forEach((load, index) => {
+    list.innerHTML += `
+      <li>
+        <b>${load.origin}</b> → ${load.destination}<br>
+        Driver: ${load.driver}<br>
+        Status: ${load.status}<br>
+        <button onclick="markAssigned(${index})">Assign</button>
+        <button onclick="markDelivered(${index})">Delivered</button>
+      </li>
+    `;
+  });
+}
+
+function markAssigned(i) {
+  loads[i].status = "Assigned";
+  renderLoads();
+}
+
+function markDelivered(i) {
+  loads[i].status = "Delivered";
+  renderLoads();
+}
+</script>
+
+</body>
+</html>
