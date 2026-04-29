@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dispatchify — Logistics & Trucking</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0c10; --surface: #111520; --card: #161b27; --border: #1f2a3d;
+      --accent: #f59e0b; --accent2: #3b82f6; --text: #e8ecf4; --muted: #5a6a88; --green: #10b981;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 18px 48px; background: rgba(10,12,16,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800; letter-spacing: 0.04em; color: var(--accent); }
+    .nav-logo span { color: var(--text); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a { font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta { padding: 9px 22px; background: var(--accent); color: #000; font-size: 13px; font-weight: 500; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; }
+    #home { min-height: 100vh; display: flex; align-items: center; padding: 120px 48px 80px; position: relative; overflow: hidden; }
+    .hero-grid { position: absolute; inset: 0; opacity: 0.06; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 60px 60px; }
+    .hero-glow { position: absolute; top: 20%; left: 50%; transform: translateX(-50%); width: 600px; height: 400px; background: radial-gradient(ellipse, rgba(245,158,11,0.08) 0%, transparent 70%); pointer-events: none; }
+    .hero-content { position: relative; max-width: 780px; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25); padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; animation: fadeUp 0.6s ease both; }
+    .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+    h1 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(56px, 9vw, 110px); font-weight: 800; line-height: 0.95; letter-spacing: -0.01em; text-transform: uppercase; animation: fadeUp 0.6s 0.1s ease both; }
+    h1 .highlight { color: var(--accent); }
+    .hero-sub { margin-top: 28px; max-width: 520px; font-size: 16px; line-height: 1.7; color: var(--muted); animation: fadeUp 0.6s 0.2s ease both; }
+    .hero-actions { margin-top: 40px; display: flex; gap: 14px; align-items: center; animation: fadeUp 0.6s 0.3s ease both; }
+    .btn-primary { padding: 14px 32px; background: var(--accent); color: #000; font-size: 14px; font-weight: 500; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; }
+    .btn-outline { padding: 14px 32px; background: transparent; color: var(--text); font-size: 14px; font-weight: 500; border: 1px solid var(--border); border-radius: 5px; cursor: pointer; text-decoration: none; }
+    .hero-stats { margin-top: 64px; display: flex; gap: 48px; animation: fadeUp 0.6s 0.4s ease both; }
+    .stat-num { font-family: 'Barlow Condensed', sans-serif; font-size: 40px; font-weight: 700; color: var(--accent); line-height: 1; }
+    .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    section { padding: 100px 48px; }
+    .section-tag { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+    .section-tag::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+    .section-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(36px, 5vw, 58px); font-weight: 700; text-transform: uppercase; line-height: 1.05; margin-bottom: 20px; }
+    .section-sub { font-size: 15px; color: var(--muted); max-width: 500px; line-height: 1.7; }
+    #about { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1100px; margin: 0 auto; }
+    .about-visual { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .about-stat { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
+    .about-stat-num { font-family: 'Barlow Condensed', sans-serif; font-size: 32px; font-weight: 700; color: var(--accent); }
+    .about-stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .about-text p { font-size: 15px; color: var(--muted); line-height: 1.8; margin-bottom: 16px; }
+    .about-text p strong { color: var(--text); font-weight: 500; }
+    .services-header { margin-bottom: 56px; }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .service-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 32px; transition: border-color 0.2s, transform 0.2s; position: relative; overflow: hidden; }
+    .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+    .service-card:hover { border-color: var(--muted); transform: translateY(-3px); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon { width: 44px; height: 44px; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 20px; }
+    .service-card h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; text-transform: uppercase; margin-bottom: 10px; }
+    .service-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    #contact { background: var(--surface); border-top: 1px solid var(--border); }
+    .contact-wrap { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .contact-form { display: flex; flex-direction: column; gap: 14px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .contact-form input, .contact-form textarea { width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 7px; padding: 12px 16px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; }
+    .contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--muted); }
+    .contact-form textarea { resize: vertical; min-height: 120px; }
+    .submit-btn { padding: 13px; background: var(--accent); color: #000; font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 14px; border: none; border-radius: 7px; cursor: pointer; }
+    .contact-info { display: flex; flex-direction: column; gap: 24px; }
+    .contact-info-item { display: flex; gap: 16px; align-items: flex-start; }
+    .contact-icon { width: 40px; height: 40px; min-width: 40px; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+    .contact-info-item h4 { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+    .contact-info-item p { font-size: 15px; font-weight: 500; }
+    .dash-cta { padding: 60px 48px; background: linear-gradient(135deg, rgba(245,158,11,0.08) 0%, rgba(59,130,246,0.05) 100%); border-top: 1px solid var(--border); text-align: center; }
+    .dash-cta h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 40px; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; }
+    .dash-cta p { color: var(--muted); font-size: 15px; margin-bottom: 28px; }
+    footer { padding: 32px 48px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; color: var(--accent); }
+    footer p { font-size: 12px; color: var(--muted); }
+    @media (max-width: 768px) { nav { padding: 16px 20px; } .nav-links { display: none; } #home, section { padding: 80px 20px; } .about-grid, .contact-wrap { grid-template-columns: 1fr; gap: 40px; } .hero-stats { gap: 28px; flex-wrap: wrap; } footer { flex-direction: column; gap: 12px; text-align: center; } }
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">DISPATCH<span>IFY</span></div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="dashboard.html" class="nav-cta">Open Dashboard</a>
+</nav>
+<section id="home">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Now Dispatching Across the Nation</div>
+    <h1>Move <span class="highlight">Freight.</span><br>Move Fast.<br>Move Smart.</h1>
+    <p class="hero-sub">Dispatchify connects shippers with trusted drivers — real-time load tracking, seamless dispatch management, and zero delays.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Get a Quote</a>
+      <a href="#services" class="btn-outline">Our Services</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Loads Delivered</div></div>
+      <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Active Drivers</div></div>
+      <div class="stat-item"><div class="stat-num">98%</div><div class="stat-label">On-Time Rate</div></div>
+    </div>
+  </div>
+</section>
+<section id="about">
+  <div class="about-grid">
+    <div class="about-visual">
+      <div class="about-stat"><div class="about-stat-num">24/7</div><div class="about-stat-label">Dispatch Support</div></div>
+      <div class="about-stat"><div class="about-stat-num">48h</div><div class="about-stat-label">Avg. Delivery Time</div></div>
+      <div class="about-stat"><div class="about-stat-num">100%</div><div class="about-stat-label">Load Visibility</div></div>
+      <div class="about-stat"><div class="about-stat-num">$0</div><div class="about-stat-label">Hidden Fees</div></div>
+    </div>
+    <div class="about-text">
+      <div class="section-tag">About Us</div>
+      <h2 class="section-title">Built for the Road Ahead</h2>
+      <p>At <strong>Dispatchify</strong>, we believe freight shouldn't be complicated. We connect reliable drivers with loads that need moving — fast, efficiently, and transparently.</p>
+      <p>Our dispatch team works around the clock to ensure every shipment is tracked, every driver is supported, and every client is kept in the loop from pickup to delivery.</p>
+      <a href="#contact" class="btn-primary" style="display:inline-block;margin-top:8px">Work With Us</a>
+    </div>
+  </div>
+</section>
+<section id="services">
+  <div class="services-header">
+    <div class="section-tag">What We Do</div>
+    <h2 class="section-title">Our Services</h2>
+    <p class="section-sub">Everything you need to keep freight moving — from a single load to full fleet dispatch.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card"><div class="service-icon">🚛</div><h3>Full Truckload</h3><p>Dedicated trucks for large shipments. Your freight, your timeline, door to door with zero stops.</p></div>
+    <div class="service-card"><div class="service-icon">📦</div><h3>LTL Freight</h3><p>Less-than-truckload shipping for smaller loads. Cost-effective and reliable with real-time updates.</p></div>
+    <div class="service-card"><div class="service-icon">⚡</div><h3>Expedited Dispatch</h3><p>Need it there fast? Our expedited service guarantees same-day or next-day load assignment.</p></div>
+    <div class="service-card"><div class="service-icon">📡</div><h3>Live Load Tracking</h3><p>Know where your freight is at every moment. Our dashboard gives you full visibility in real time.</p></div>
+    <div class="service-card"><div class="service-icon">🗂️</div><h3>Driver Management</h3><p>We handle driver assignments, load planning, and route optimization so you don't have to.</p></div>
+    <div class="service-card"><div class="service-icon">🤝</div><h3>Broker Support</h3><p>We work directly with freight brokers to find the best loads and maximize driver earnings.</p></div>
+  </div>
+</section>
+<div class="dash-cta">
+  <h2>Ready to Manage Your Loads?</h2>
+  <p>Open the Dispatchify dashboard to add loads, assign drivers, and track deliveries in real time.</p>
+  <a href="dashboard.html" class="btn-primary">Open Dispatch Dashboard →</a>
+</div>
+<section id="contact">
+  <div class="contact-wrap">
+    <div>
+      <div class="section-tag">Get In Touch</div>
+      <h2 class="section-title">Let's Move Your Freight</h2>
+      <p class="section-sub" style="margin-bottom:40px">Ready to get started? Fill out the form and our dispatch team will reach out within 24 hours.</p>
+      <div class="contact-info">
+        <div class="contact-info-item"><div class="contact-icon">📍</div><div><h4>Location</h4><p>United States — Nationwide</p></div></div>
+        <div class="contact-info-item"><div class="contact-icon">📧</div><div><h4>Email</h4><p>dispatch@dispatchify.com</p></div></div>
+        <div class="contact-info-item"><div class="contact-icon">📞</div><div><h4>Phone</h4><p>+1 (800) DISPATCH</p></div></div>
+      </div>
+    </div>
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Email Address" required>
+      </div>
+      <input type="text" placeholder="Company Name">
+      <input type="text" placeholder="Origin City">
+      <input type="text" placeholder="Destination City">
+      <textarea placeholder="Tell us about your freight needs..."></textarea>
+      <button type="submit" class="submit-btn">Send Message →</button>
+    </form>
+  </div>
+</section>
+<footer>
+  <div class="footer-logo">DISPATCHIFY</div>
+  <p>© 2025 Dispatchify. All rights reserved.</p>
+  <p>Built for the road.</p>
+</footer>
+<script>
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.submit-btn');
+    btn.textContent = '✓ Message Sent!';
+    btn.style.background = '#10b981';
+    setTimeout(() => { btn.textContent = 'Send Message →'; btn.style.background = ''; e.target.reset(); }, 3000);
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.service-card, .about-stat, .contact-info-item').forEach(el => {
+    el.style.opacity = '0'; el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
